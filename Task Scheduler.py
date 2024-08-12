@@ -33,4 +33,31 @@ class TaskScheduler:
         self.save_tasks()  # Save tasks to file
         print(f"Task '{task}' added with deadline {deadline}.")
 
-    
+    def check_reminders(self):
+        """Check for tasks that are due within the next hour."""
+        current_time = datetime.now()
+        upcoming_tasks = []
+
+
+        for task in self.tasks:
+            task_deadline = datetime.strptime(task['deadline'], '%Y-%m-%d %H:%M')
+            if current_time <= task_deadline < current_time + timedelta(hours=1):
+                upcoming_tasks.append(task)  # Collect tasks due in the next hour
+
+
+        return upcoming_tasks  # Return the list of upcoming tasks
+
+
+def main():
+    """Main function to run the Task Scheduler."""
+    scheduler = TaskScheduler()  # Create an instance of TaskScheduler
+
+    while True:
+        print("\nTask Scheduler")
+        print("1. Add Task")
+        print("2. Check Reminders")
+        print("3. Exit")
+
+        choice = input("Choose an option: ")
+
+        
