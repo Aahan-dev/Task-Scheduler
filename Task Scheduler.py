@@ -60,4 +60,35 @@ def main():
 
         choice = input("Choose an option: ")
 
-        
+        if choice == '1':
+            task_description = input("Enter task description: ")
+            deadline_input = input("Enter deadline (YYYY-MM-DD HH:MM): ")
+            try:
+                # Validate the deadline format
+                datetime.strptime(deadline_input, '%Y-%m-%d %H:%M')
+                scheduler.add_task(task_description, deadline_input)  # Add the task
+            except ValueError:
+                print("Invalid date format. Please use 'YYYY-MM-DD HH:MM'.")
+
+
+        elif choice == '2':
+            reminders = scheduler.check_reminders()  # Check for upcoming tasks
+            if reminders:
+                print("Upcoming tasks:")
+                for reminder in reminders:
+                    print(f"- {reminder['task']} (Deadline: {reminder['deadline']})")
+            else:
+                print("No upcoming tasks within the next hour.")
+
+
+        elif choice == '3':
+            print("Exiting Task Scheduler. Goodbye!")
+            break  # Exit the loop
+
+
+        else:
+            print("Invalid option. Please choose again.")
+
+
+if __name__ == "__main__":
+    main()  #
